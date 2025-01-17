@@ -1,6 +1,6 @@
 import { useGameContext } from "@/context/GameContext";
-import { Link, useNavigation, useRouter } from "expo-router";
-import { useEffect, useState } from "react";
+import { Link, useNavigation } from "expo-router";
+import { useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -10,12 +10,15 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+// @ts-ignore
+import UnityView from "@azesmway/react-native-unity";
 
 export default function Index() {
   const { setGameUrl } = useGameContext();
   const [games, setGames] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
+  const unityRef = useRef(null);
 
   useEffect(() => {
     const fetchGames = async () => {
@@ -46,6 +49,13 @@ export default function Index() {
 
   return (
     <View style={styles.container}>
+      {/* <UnityView
+        ref={unityRef}
+        style={{ flex: 1 }}
+        onUnityMessage={(result) => {
+          console.log("onUnityMessage", result.nativeEvent.message);
+        }}
+      /> */}
       <FlatList
         data={games}
         keyExtractor={(item) => item.Md5.toString()}
